@@ -1,907 +1,1468 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AI Idea Generator - TheAIcraftify</title>
+  <title>AI Idea Generator — Build Your Business Blueprint</title>
+  <meta
+    name="description"
+    content="Turn a business problem into a practical AI-powered business blueprint."
+  >
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #080a0f;
-  color: #f2f5f7;
-  min-height: 100vh;
-  line-height: 1.6;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(100,120,150,.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(100,120,150,.07) 1px, transparent 1px);
-  background-size: 86px 86px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.container {
-  width: min(920px, 92%);
-  margin: auto;
-}
-
-/* HEADER */
-
-header {
-  border-bottom: 1px solid #252a31;
-  padding: 22px 0;
-}
-
-.brand {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.brand span {
-  color: #6ee7ff;
-}
-
-/* HERO */
-
-.hero {
-  text-align: center;
-  padding: 55px 0 30px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 8px 16px;
-  border: 1px solid #303943;
-  border-radius: 30px;
-  color: #6ee7ff;
-  font-size: 13px;
-  margin-bottom: 20px;
-  background: #11151b;
-}
-
-h1 {
-  font-size: clamp(34px, 7vw, 58px);
-  line-height: 1.08;
-  margin-bottom: 18px;
-}
-
-.hero p {
-  color: #9ba5af;
-  max-width: 680px;
-  margin: auto;
-  font-size: 17px;
-}
-
-/* FORM */
-
-.card {
-  background: #12161b;
-  border: 1px solid #283039;
-  border-radius: 18px;
-  padding: 25px;
-  margin: 25px 0;
-}
-
-.field {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 9px;
-}
-
-input,
-textarea {
-  width: 100%;
-  background: #0c1014;
-  color: #ffffff;
-  border: 1px solid #303943;
-  border-radius: 10px;
-  padding: 14px;
-  font-size: 16px;
-  outline: none;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #6ee7ff;
-}
-
-textarea {
-  min-height: 105px;
-  resize: vertical;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  border: 0;
-  border-radius: 10px;
-  background: #6e8cff;
-  color: #071014;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: .9;
-}
-
-.secondary {
-  background: transparent;
-  color: #6ee7ff;
-  border: 1px solid #303943;
-}
-
-/* LOADING */
-
-.loading {
-  display: none;
-  text-align: center;
-  padding: 30px;
-  color: #6ee7ff;
-}
-
-.loading.show {
-  display: block;
-}
-
-/* RESULTS */
-
-.results {
-  display: none;
-}
-
-.results.show {
-  display: block;
-}
-
-.result-box {
-  background: #10151b;
-  border: 1px solid #283039;
-  border-radius: 16px;
-  padding: 24px;
-  margin: 18px 0;
-}
-
-.result-box h2 {
-  margin-bottom: 12px;
-  font-size: 23px;
-}
-
-.result-box h3 {
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.result-box p {
-  color: #aab3bd;
-  font-size: 17px;
-}
-
-.result-box ul,
-.result-box ol {
-  padding-left: 22px;
-  color: #b9c2ca;
-}
-
-.result-box li {
-  margin-bottom: 8px;
-}
-
-.result-title {
-  color: #6ee7ff;
-  margin-bottom: 10px;
-}
-
-.icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #1d263f;
-  border-radius: 12px;
-  font-size: 23px;
-  margin-bottom: 16px;
-}
-
-.solution {
-  font-size: 18px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 20px;
-}
-
-.wide {
-  grid-column: 1 / -1;
-}
-
-/* ACTIONS */
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin: 25px 0;
-}
-
-/* FOOTER */
-
-footer {
-  text-align: center;
-  padding: 35px 0;
-  color: #68727c;
-  font-size: 13px;
-}
-
-footer span {
-  color: #6e8cff;
-}
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .wide {
-    grid-column: auto;
-  }
-
-  .actions {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding-top: 35px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-
-  .card {
-    padding: 20px;
-  }
-}
-</style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<header>
-  <div class="container">
-    <div class="brand">
-      <span>AI</span>craftify
+  <!-- =========================================================
+       HEADER
+  ========================================================== -->
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark">AI</span>
+        <span>
+          <strong>AI Idea Generator</strong>
+          <small>Business Blueprint Engine</small>
+        </span>
+      </a>
     </div>
-  </div>
-</header>
-
-<main class="container">
-
-<section class="hero">
-
-  <div class="badge">
-    ● Demo Mode • Rule-Based Generator • No Paid API
-  </div>
-
-  <h1>
-    Describe your idea.<br>
-    Get an instant concept.
-  </h1>
-
-  <p>
-    Fill in three quick details about a business problem,
-    and this tool will assemble a starter concept:
-    a solution idea, core features, target audience,
-    suggested technology, an earning model, and a simple roadmap.
-  </p>
-
-</section>
+  </header>
 
 
-<section class="card">
+  <main>
 
-<form id="ideaForm">
+    <!-- =======================================================
+         HERO
+    ======================================================== -->
 
-  <div class="field">
-    <label for="businessType">
-      1. Business type
-    </label>
+    <section class="hero">
+      <div class="container">
 
-    <input
-      id="businessType"
-      type="text"
-      placeholder="e.g. local bakery, tutoring service, online store"
-    >
-  </div>
+        <div class="hero-badge">
+          AI BUSINESS BLUEPRINT
+        </div>
 
+        <h1>
+          Turn Your Business Problem Into a
+          <span>Real Business Plan.</span>
+        </h1>
 
-  <div class="field">
-    <label for="problem">
-      2. Problem you want to solve
-    </label>
+        <p class="hero-description">
+          Describe your business, customer and problem.
+          Get a practical blueprint covering the solution,
+          MVP, pricing, marketing, customer acquisition,
+          risks and long-term roadmap.
+        </p>
 
-    <textarea
-      id="problem"
-      placeholder="e.g. customers struggle to find the right products"
-    ></textarea>
-  </div>
-
-
-  <div class="field">
-    <label for="customers">
-      3. Target customers
-    </label>
-
-    <input
-      id="customers"
-      type="text"
-      placeholder="e.g. busy parents, small shop owners, young shoppers"
-    >
-  </div>
+      </div>
+    </section>
 
 
-  <button type="submit">
-    Generate Idea
-  </button>
+    <!-- =======================================================
+         INPUT SECTION
+    ======================================================== -->
 
-</form>
+    <section class="generator-section">
+      <div class="container">
 
-</section>
+        <div class="form-panel">
 
+          <div class="section-heading">
+            <span class="section-number">01</span>
 
-<div id="loadingPanel" class="loading">
-  ⚡ Generating your business concept...
-</div>
-
-
-<section id="resultsPanel" class="results">
-
-  <div class="result-box wide">
-
-    <div class="icon">⚡</div>
-
-    <h2 class="result-title">
-      AI Solution Idea
-    </h2>
-
-    <p id="resSolution" class="solution"></p>
-
-  </div>
+            <div>
+              <h2>Define Your Business</h2>
+              <p>
+                Give the engine enough context to create a
+                more realistic business strategy.
+              </p>
+            </div>
+          </div>
 
 
-  <div class="grid">
+          <form id="ideaForm">
 
-    <div class="result-box">
+            <!-- BUSINESS TYPE -->
 
-      <div class="icon">◉</div>
+            <div class="field">
+              <label for="businessType">
+                Business Type
+                <span>*</span>
+              </label>
 
-      <h3>
-        Main Features
-      </h3>
+              <input
+                type="text"
+                id="businessType"
+                name="businessType"
+                placeholder="e.g. Salon, Clothing Store, Restaurant, Agency"
+                autocomplete="off"
+              >
 
-      <ul id="resFeatures"></ul>
+              <div class="example-chips">
+                <button type="button" class="example-chip" data-target="businessType">
+                  Salon
+                </button>
+
+                <button type="button" class="example-chip" data-target="businessType">
+                  Restaurant
+                </button>
+
+                <button type="button" class="example-chip" data-target="businessType">
+                  Clothing Store
+                </button>
+
+                <button type="button" class="example-chip" data-target="businessType">
+                  Digital Agency
+                </button>
+              </div>
+            </div>
+
+
+            <!-- PROBLEM -->
+
+            <div class="field">
+              <label for="problem">
+                Problem to Solve
+                <span>*</span>
+              </label>
+
+              <textarea
+                id="problem"
+                name="problem"
+                rows="4"
+                placeholder="What problem is hurting the business or its customers?"
+              ></textarea>
+
+              <small class="field-help">
+                Be specific. Example: Customers forget appointments
+                and the salon loses repeat business.
+              </small>
+            </div>
+
+
+            <!-- TARGET CUSTOMER -->
+
+            <div class="field">
+              <label for="customers">
+                Target Customer
+                <span>*</span>
+              </label>
+
+              <input
+                type="text"
+                id="customers"
+                name="customers"
+                placeholder="e.g. Local salon customers, small business owners"
+                autocomplete="off"
+              >
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div class="field">
+              <label for="location">
+                Target Location / Market
+              </label>
+
+              <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="e.g. Delhi, India / Local market / Global"
+                autocomplete="off"
+              >
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="field">
+              <label for="budget">
+                Starting Budget
+              </label>
+
+              <input
+                type="text"
+                id="budget"
+                name="budget"
+                placeholder="e.g. ₹10,000 / Low budget / ₹1 lakh"
+                autocomplete="off"
+              >
+            </div>
+
+
+            <!-- GOAL -->
+
+            <div class="field">
+              <label for="goal">
+                Main Business Goal
+              </label>
+
+              <select id="goal" name="goal">
+                <option value="">
+                  Select your main goal
+                </option>
+
+                <option value="validate the idea and get the first customers">
+                  Validate the idea
+                </option>
+
+                <option value="launch an MVP and get the first customers">
+                  Launch an MVP
+                </option>
+
+                <option value="generate revenue quickly">
+                  Generate Revenue
+                </option>
+
+                <option value="build a scalable startup">
+                  Build a Scalable Startup
+                </option>
+
+                <option value="automate an existing business">
+                  Automate Existing Business
+                </option>
+
+                <option value="grow an existing business">
+                  Grow Existing Business
+                </option>
+              </select>
+            </div>
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="field">
+              <label for="experience">
+                Your Experience Level
+              </label>
+
+              <select id="experience" name="experience">
+
+                <option value="">
+                  Select experience level
+                </option>
+
+                <option value="beginner">
+                  Beginner
+                </option>
+
+                <option value="some experience">
+                  Some Experience
+                </option>
+
+                <option value="intermediate">
+                  Intermediate
+                </option>
+
+                <option value="advanced">
+                  Advanced
+                </option>
+
+                <option value="business owner">
+                  Existing Business Owner
+                </option>
+
+              </select>
+            </div>
+
+
+            <!-- GENERATE -->
+
+            <div class="form-actions">
+
+              <button
+                type="submit"
+                id="generateBtn"
+                class="primary-btn"
+              >
+                <span>Generate Business Blueprint</span>
+                <span class="btn-arrow">→</span>
+              </button>
+
+              <p class="form-note">
+                No API key required. No paid service required.
+              </p>
+
+            </div>
+
+          </form>
+
+        </div>
+
+
+        <!-- ===================================================
+             LOADING
+        ==================================================== -->
+
+        <div
+          id="loadingPanel"
+          class="loading-panel"
+          hidden
+        >
+
+          <div class="loading-animation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <h2>Building Your Blueprint...</h2>
+
+          <p>
+            Analysing your business problem, customer,
+            market and growth possibilities.
+          </p>
+
+        </div>
+
+
+        <!-- ===================================================
+             RESULTS
+        ==================================================== -->
+
+        <section
+          id="resultsPanel"
+          class="results-panel"
+          hidden
+        >
+
+          <!-- RESULT HEADER -->
+
+          <div class="results-header">
+
+            <div>
+              <span class="section-number">02</span>
+
+              <p class="result-label">
+                GENERATED BUSINESS BLUEPRINT
+              </p>
+
+              <h2 id="resultHeading">
+                Your Business Blueprint
+              </h2>
+
+              <p class="results-subtitle">
+                A practical starting strategy based on your inputs.
+              </p>
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               EXECUTIVE SUMMARY
+          ================================================== -->
+
+          <div class="blueprint-grid">
+
+            <article class="result-card result-card-wide">
+
+              <div class="card-icon">💡</div>
+
+              <div>
+                <span class="card-label">
+                  AI SOLUTION
+                </span>
+
+                <h3>
+                  What Should You Build?
+                </h3>
+
+                <p id="resSolution"></p>
+              </div>
+
+            </article>
+
+
+            <article class="result-card">
+
+              <div class="card-icon">🎯</div>
+
+              <div>
+                <span class="card-label">
+                  BUSINESS OPPORTUNITY
+                </span>
+
+                <h3>
+                  Problem Breakdown
+                </h3>
+
+                <p id="resProblem"></p>
+              </div>
+
+            </article>
+
+
+            <article class="result-card">
+
+              <div class="card-icon">✨</div>
+
+              <div>
+                <span class="card-label">
+                  DIFFERENTIATION
+                </span>
+
+                <h3>
+                  Unique Value Proposition
+                </h3>
+
+                <p id="resValue"></p>
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <!-- =================================================
+               CUSTOMER
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+              <span class="section-number">03</span>
+
+              <div>
+                <span class="card-label">
+                  CUSTOMER
+                </span>
+
+                <h2>
+                  Who Is This For?
+                </h2>
+              </div>
+            </div>
+
+
+            <div class="blueprint-grid">
+
+              <article class="result-card">
+
+                <div class="card-icon">👥</div>
+
+                <div>
+                  <h3>Primary Customer</h3>
+                  <p id="resPrimaryCustomer"></p>
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">📍</div>
+
+                <div>
+                  <h3>Market</h3>
+                  <p id="resLocation"></p>
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">🚀</div>
+
+                <div>
+                  <h3>Early Adopters</h3>
+                  <p id="resEarlyAdopters"></p>
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">💼</div>
+
+                <div>
+                  <h3>Buyer</h3>
+                  <p id="resBuyer"></p>
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               FEATURES
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">04</span>
+
+              <div>
+                <span class="card-label">
+                  PRODUCT
+                </span>
+
+                <h2>
+                  What Should The MVP Include?
+                </h2>
+
+                <p>
+                  Start with the smallest version that can
+                  actually solve the problem.
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="blueprint-grid">
+
+              <article class="result-card result-card-wide">
+
+                <div class="card-icon">🧩</div>
+
+                <div>
+
+                  <h3>
+                    Core Features
+                  </h3>
+
+                  <ul id="resFeatures"></ul>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">⚡</div>
+
+                <div>
+
+                  <h3>
+                    MVP
+                  </h3>
+
+                  <ul id="resMvp"></ul>
+
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               TECHNOLOGY
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">05</span>
+
+              <div>
+
+                <span class="card-label">
+                  DEVELOPMENT
+                </span>
+
+                <h2>
+                  Suggested Technology
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <article class="result-card result-card-wide">
+
+              <div class="card-icon">🛠️</div>
+
+              <div>
+
+                <ul id="resTech"></ul>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <!-- =================================================
+               MONEY
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">06</span>
+
+              <div>
+
+                <span class="card-label">
+                  MONEY
+                </span>
+
+                <h2>
+                  How Can This Business Make Money?
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="blueprint-grid">
+
+              <article class="result-card">
+
+                <div class="card-icon">💰</div>
+
+                <div>
+
+                  <h3>
+                    Primary Revenue Model
+                  </h3>
+
+                  <p id="resRevenuePrimary"></p>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">📦</div>
+
+                <div>
+
+                  <h3>
+                    Alternative Models
+                  </h3>
+
+                  <ul id="resRevenueAlternatives"></ul>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card result-card-wide">
+
+                <div class="card-icon">💳</div>
+
+                <div>
+
+                  <h3>
+                    Pricing Strategy
+                  </h3>
+
+                  <ul id="resPricing"></ul>
+
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               MARKETING
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">07</span>
+
+              <div>
+
+                <span class="card-label">
+                  CUSTOMER ACQUISITION
+                </span>
+
+                <h2>
+                  How Will You Get Customers?
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="blueprint-grid">
+
+              <article class="result-card">
+
+                <div class="card-icon">📣</div>
+
+                <div>
+
+                  <h3>
+                    Marketing Channels
+                  </h3>
+
+                  <ul id="resMarketing"></ul>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">🎯</div>
+
+                <div>
+
+                  <h3>
+                    First Customer Strategy
+                  </h3>
+
+                  <ul id="resAcquisition"></ul>
+
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               COST
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">08</span>
+
+              <div>
+
+                <span class="card-label">
+                  RESOURCES
+                </span>
+
+                <h2>
+                  Cost & Effort
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="blueprint-grid">
+
+              <article class="result-card">
+
+                <div class="card-icon">💸</div>
+
+                <div>
+
+                  <h3>
+                    Budget Context
+                  </h3>
+
+                  <p id="resBudget"></p>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card">
+
+                <div class="card-icon">🧠</div>
+
+                <div>
+
+                  <h3>
+                    Experience
+                  </h3>
+
+                  <p id="resExperience"></p>
+
+                </div>
+
+              </article>
+
+
+              <article class="result-card result-card-wide">
+
+                <div class="card-icon">⚙️</div>
+
+                <div>
+
+                  <h3>
+                    Recommended Approach
+                  </h3>
+
+                  <p id="resEffort"></p>
+
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               RISKS
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">09</span>
+
+              <div>
+
+                <span class="card-label">
+                  REALITY CHECK
+                </span>
+
+                <h2>
+                  Risks & Mitigation
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <article class="result-card result-card-wide">
+
+              <div class="card-icon">⚠️</div>
+
+              <div>
+
+                <ul id="resRisks"></ul>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <!-- =================================================
+               FIRST ACTIONS
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">10</span>
+
+              <div>
+
+                <span class="card-label">
+                  ACTION PLAN
+                </span>
+
+                <h2>
+                  Your First 5 Actions
+                </h2>
+
+                <p>
+                  Don't build everything immediately.
+                  Start here.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <article class="result-card result-card-wide">
+
+              <ol
+                id="resFirstActions"
+                class="action-list"
+              ></ol>
+
+            </article>
+
+          </div>
+
+
+          <!-- =================================================
+               LONG TERM ROADMAP
+          ================================================== -->
+
+          <div class="result-section roadmap-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">11</span>
+
+              <div>
+
+                <span class="card-label">
+                  LONG-TERM ROADMAP
+                </span>
+
+                <h2>
+                  From Idea → Business → Growth
+                </h2>
+
+                <p>
+                  The roadmap continues beyond the first 90 days.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="roadmap-grid">
+
+              <!-- 0-30 -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  0–30 DAYS
+                </div>
+
+                <h3>
+                  Validate
+                </h3>
+
+                <ul id="resRoadmap30"></ul>
+
+              </article>
+
+
+              <!-- 31-60 -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  31–60 DAYS
+                </div>
+
+                <h3>
+                  Test
+                </h3>
+
+                <ul id="resRoadmap60"></ul>
+
+              </article>
+
+
+              <!-- 61-90 -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  61–90 DAYS
+                </div>
+
+                <h3>
+                  Launch
+                </h3>
+
+                <ul id="resRoadmap90"></ul>
+
+              </article>
+
+
+              <!-- 3-6 -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  3–6 MONTHS
+                </div>
+
+                <h3>
+                  Improve
+                </h3>
+
+                <ul id="resRoadmap6"></ul>
+
+              </article>
+
+
+              <!-- 6-12 -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  6–12 MONTHS
+                </div>
+
+                <h3>
+                  Grow
+                </h3>
+
+                <ul id="resRoadmap12"></ul>
+
+              </article>
+
+
+              <!-- 12+ -->
+
+              <article class="roadmap-card">
+
+                <div class="roadmap-period">
+                  12+ MONTHS
+                </div>
+
+                <h3>
+                  Scale
+                </h3>
+
+                <ul id="resRoadmapLong"></ul>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               GROWTH
+          ================================================== -->
+
+          <div class="result-section">
+
+            <div class="result-section-heading">
+
+              <span class="section-number">12</span>
+
+              <div>
+
+                <span class="card-label">
+                  FUTURE
+                </span>
+
+                <h2>
+                  Growth Opportunities
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <article class="result-card result-card-wide">
+
+              <div class="card-icon">🚀</div>
+
+              <div>
+
+                <ul id="resGrowth"></ul>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <!-- =================================================
+               ACTION BUTTONS
+          ================================================== -->
+
+          <div class="results-actions">
+
+            <button
+              type="button"
+              id="regenerateBtn"
+              class="secondary-btn"
+            >
+              ↻ Regenerate Blueprint
+            </button>
+
+            <button
+              type="button"
+              id="newIdeaBtn"
+              class="primary-btn"
+            >
+              Start New Business Idea →
+            </button>
+
+          </div>
+
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p>
+        AI Idea Generator — Built as part of TheAICraftify.
+      </p>
+
+      <p class="footer-small">
+        Validate with real customers before investing heavily.
+      </p>
 
     </div>
 
+  </footer>
 
-    <div class="result-box">
 
-      <div class="icon">★</div>
+  <!-- =========================================================
+       SMALL UI HELPERS
+       These work alongside the main script.
+  ========================================================== -->
 
-      <h3>
-        Target Audience
-      </h3>
+  <script>
 
-      <p id="resAudience"></p>
+    document.addEventListener("DOMContentLoaded", () => {
 
-    </div>
+      /* Example chips */
 
+      document.querySelectorAll(".example-chip").forEach((chip) => {
 
-    <div class="result-box">
+        chip.addEventListener("click", () => {
 
-      <div class="icon">&lt;/&gt;</div>
+          const targetId = chip.dataset.target;
+          const target = document.getElementById(targetId);
 
-      <h3>
-        Suggested Technology
-      </h3>
+          if (!target) return;
 
-      <ul id="resTech"></ul>
+          target.value = chip.textContent.trim();
+          target.focus();
 
-    </div>
+        });
 
+      });
 
-    <div class="result-box">
 
-      <div class="icon">$</div>
+      /*
+        The current script.js already generates the complete
+        blueprint internally.
 
-      <h3>
-        Possible Earning Model
-      </h3>
+        This bridge displays the deeper blueprint in the new UI.
+      */
 
-      <ul id="resEarning"></ul>
+      const originalGenerate =
+        window.AIIdeaGenerator?.generate;
 
-    </div>
 
+      function fillElement(id, value) {
 
-    <div class="result-box wide">
+        const element = document.getElementById(id);
 
-      <div class="icon">⌛</div>
+        if (!element) return;
 
-      <h3>
-        Simple Development Roadmap
-      </h3>
+        element.textContent = value || "";
 
-      <ol id="resRoadmap"></ol>
+      }
 
-    </div>
 
-  </div>
+      function fillList(id, items) {
 
+        const element = document.getElementById(id);
 
-  <div class="actions">
+        if (!element) return;
 
-    <button
-      id="regenerateBtn"
-      type="button"
-    >
-      Generate Another Version
-    </button>
+        element.innerHTML = "";
 
-    <button
-      id="newIdeaBtn"
-      type="button"
-      class="secondary"
-    >
-      Start a New Idea
-    </button>
+        (items || []).forEach((item) => {
 
-  </div>
+          const li = document.createElement("li");
 
-</section>
+          if (typeof item === "object") {
 
-</main>
+            li.innerHTML =
+              `<strong>${item.risk}</strong><br>${item.mitigation}`;
 
+          } else {
 
-<footer>
-  Part of <span>TheAIcraftify</span> — Project 01
-</footer>
+            li.textContent = item;
 
+          }
 
-<script>
+          element.appendChild(li);
 
-const form = document.getElementById("ideaForm");
+        });
 
-const businessType =
-  document.getElementById("businessType");
+      }
 
-const problem =
-  document.getElementById("problem");
 
-const customers =
-  document.getElementById("customers");
+      function renderBlueprint(blueprint) {
 
-const loadingPanel =
-  document.getElementById("loadingPanel");
+        if (!blueprint) return;
 
-const resultsPanel =
-  document.getElementById("resultsPanel");
+        const profile = blueprint.profile || {};
+        const audience = blueprint.targetAudience || {};
+        const revenue = blueprint.revenue || {};
+        const cost = blueprint.costAndEffort || {};
+        const roadmap = blueprint.roadmap || {};
 
-const resSolution =
-  document.getElementById("resSolution");
 
-const resFeatures =
-  document.getElementById("resFeatures");
+        /* Summary */
 
-const resAudience =
-  document.getElementById("resAudience");
+        fillElement(
+          "resProblem",
+          blueprint.problemSummary
+        );
 
-const resTech =
-  document.getElementById("resTech");
+        fillElement(
+          "resValue",
+          blueprint.uniqueValueProposition
+        );
 
-const resEarning =
-  document.getElementById("resEarning");
 
-const resRoadmap =
-  document.getElementById("resRoadmap");
+        /* Customer */
 
-const regenerateBtn =
-  document.getElementById("regenerateBtn");
+        fillElement(
+          "resPrimaryCustomer",
+          audience.primary
+        );
 
-const newIdeaBtn =
-  document.getElementById("newIdeaBtn");
+        fillElement(
+          "resLocation",
+          audience.location
+        );
 
+        fillElement(
+          "resEarlyAdopters",
+          audience.earlyAdopters
+        );
 
-function showList(element, items) {
+        fillElement(
+          "resBuyer",
+          audience.buyer
+        );
 
-  element.innerHTML = "";
 
-  items.forEach(function(item) {
+        /* Product */
 
-    const li = document.createElement("li");
+        fillList(
+          "resFeatures",
+          blueprint.features
+        );
 
-    li.textContent = item;
+        fillList(
+          "resMvp",
+          blueprint.mvp
+        );
 
-    element.appendChild(li);
 
-  });
+        /* Technology */
 
-}
+        fillList(
+          "resTech",
+          blueprint.technology
+        );
 
 
-function makeIdea(type, problemText, customerText) {
+        /* Revenue */
 
-  const typeLower = type.toLowerCase();
+        fillElement(
+          "resRevenuePrimary",
+          revenue.primary
+        );
 
+        fillList(
+          "resRevenueAlternatives",
+          revenue.alternatives
+        );
 
-  let features = [
-    "Simple dashboard for managing the business",
-    "Easy management of important daily activities",
-    "Customer-friendly interface",
-    "Automatic reminders and follow-ups",
-    "Simple reports to track performance"
-  ];
+        fillList(
+          "resPricing",
+          blueprint.pricing
+        );
 
 
-  let technology = [
-    "HTML, CSS and JavaScript",
-    "Responsive design for mobile and desktop",
-    "Local storage for basic data saving",
-    "GitHub Pages for free hosting"
-  ];
+        /* Marketing */
 
+        fillList(
+          "resMarketing",
+          blueprint.marketing
+        );
 
-  let earning = [
-    "Offer the solution as a paid service",
-    "Freemium model with optional premium features",
-    "Monthly subscription for advanced tools"
-  ];
+        fillList(
+          "resAcquisition",
+          blueprint.customerAcquisition
+        );
 
 
-  let roadmap = [
-    "Define the main workflow for the business",
-    "Build the basic interface in HTML and CSS",
-    "Add JavaScript functionality",
-    "Test the solution with real business examples",
-    "Add data storage and advanced features",
-    "Deploy the working version online"
-  ];
+        /* Cost */
 
+        fillElement(
+          "resBudget",
+          cost.budgetContext
+        );
 
-  if (
-    typeLower.includes("restaurant") ||
-    typeLower.includes("cafe") ||
-    typeLower.includes("food") ||
-    typeLower.includes("bakery") ||
-    typeLower.includes("catering")
-  ) {
+        fillElement(
+          "resExperience",
+          cost.experienceContext
+        );
 
-    features = [
-      "Digital menu and product management",
-      "Order and customer management",
-      "Order status and follow-up system",
-      "Daily sales summary",
-      "Customer history and repeat-order tracking"
-    ];
+        fillElement(
+          "resEffort",
+          `${cost.approach} ${cost.effort}`
+        );
 
-  }
 
+        /* Risks */
 
-  else if (
-    typeLower.includes("school") ||
-    typeLower.includes("academy") ||
-    typeLower.includes("tutor") ||
-    typeLower.includes("education") ||
-    typeLower.includes("coaching")
-  ) {
+        fillList(
+          "resRisks",
+          blueprint.risks
+        );
 
-    features = [
-      "Student and teacher management",
-      "Attendance tracking",
-      "Class and timetable management",
-      "Fee and payment reminders",
-      "Progress and performance reports"
-    ];
 
-  }
+        /* First actions */
 
+        fillList(
+          "resFirstActions",
+          blueprint.firstFiveActions
+        );
 
-  else if (
-    typeLower.includes("hospital") ||
-    typeLower.includes("clinic") ||
-    typeLower.includes("doctor") ||
-    typeLower.includes("medical")
-  ) {
 
-    features = [
-      "Patient information management",
-      "Appointment scheduling",
-      "Automatic appointment reminders",
-      "Patient history",
-      "Simple daily activity dashboard"
-    ];
+        /* Roadmap */
 
-  }
+        fillList(
+          "resRoadmap30",
+          roadmap.days0to30
+        );
 
+        fillList(
+          "resRoadmap60",
+          roadmap.days31to60
+        );
 
-  else if (
-    typeLower.includes("salon") ||
-    typeLower.includes("beauty") ||
-    typeLower.includes("spa") ||
-    typeLower.includes("barber")
-  ) {
+        fillList(
+          "resRoadmap90",
+          roadmap.days61to90
+        );
 
-    features = [
-      "Appointment booking",
-      "Customer profile management",
-      "Service and price management",
-      "Automatic appointment reminders",
-      "Sales and customer history"
-    ];
+        fillList(
+          "resRoadmap6",
+          roadmap.months3to6
+        );
 
-  }
+        fillList(
+          "resRoadmap12",
+          roadmap.months6to12
+        );
 
+        fillList(
+          "resRoadmapLong",
+          roadmap.months12plus
+        );
 
-  else if (
-    typeLower.includes("shop") ||
-    typeLower.includes("store") ||
-    typeLower.includes("retail")
-  ) {
 
-    features = [
-      "Product and inventory management",
-      "Customer management",
-      "Sales tracking",
-      "Low-stock reminders",
-      "Daily and monthly sales reports"
-    ];
+        /* Growth */
 
-  }
+        fillList(
+          "resGrowth",
+          blueprint.growth
+        );
 
+      }
 
-  else if (
-    typeLower.includes("real estate") ||
-    typeLower.includes("property")
-  ) {
 
-    features = [
-      "Property listing management",
-      "Customer inquiry tracking",
-      "Property search and filtering",
-      "Viewing appointment management",
-      "Lead and follow-up reminders"
-    ];
+      /*
+        Watch for the blueprint created by script.js.
+        This avoids modifying the existing generator logic.
+      */
 
-  }
+      const observer = new MutationObserver(() => {
 
+        if (
+          window.latestBusinessBlueprint &&
+          !window.__blueprintRendered
+        ) {
 
-  else if (
-    typeLower.includes("travel") ||
-    typeLower.includes("tour") ||
-    typeLower.includes("tourism")
-  ) {
+          window.__blueprintRendered = true;
 
-    features = [
-      "Trip and package management",
-      "Customer booking management",
-      "Travel itinerary creation",
-      "Payment and booking tracking",
-      "Customer follow-up reminders"
-    ];
+          renderBlueprint(
+            window.latestBusinessBlueprint
+          );
 
-  }
+        }
 
+      });
 
-  else if (
-    typeLower.includes("gym") ||
-    typeLower.includes("fitness")
-  ) {
 
-    features = [
-      "Member management",
-      "Membership expiry reminders",
-      "Workout and progress tracking",
-      "Payment tracking",
-      "Member attendance history"
-    ];
-
-  }
-
-
-  else if (
-    typeLower.includes("freelance") ||
-    typeLower.includes("agency") ||
-    typeLower.includes("consult")
-  ) {
-
-    features = [
-      "Client management",
-      "Project and task tracking",
-      "Deadline reminders",
-      "Invoice and payment tracking",
-      "Client communication history"
-    ];
-
-  }
-
-
-  const solution =
-    "A smart digital solution for " +
-    type +
-    " that helps solve \"" +
-    problemText +
-    "\" and makes the business easier to manage.";
-
-
-  const audience =
-    "Primarily " +
-    customerText +
-    ", especially people who regularly deal with \"" +
-    problemText +
-    "\".";
-
-
-  return {
-    solution: solution,
-    features: features,
-    audience: audience,
-    technology: technology,
-    earning: earning,
-    roadmap: roadmap
-  };
-
-}
-
-
-function generateIdea() {
-
-  const type =
-    businessType.value.trim();
-
-  const problemText =
-    problem.value.trim();
-
-  const customerText =
-    customers.value.trim();
-
-
-  if (!type || !problemText || !customerText) {
-
-    alert(
-      "Please fill in all three fields first."
-    );
-
-    return;
-
-  }
-
-
-  loadingPanel.classList.add("show");
-
-  resultsPanel.classList.remove("show");
-
-
-  setTimeout(function() {
-
-    const idea =
-      makeIdea(
-        type,
-        problemText,
-        customerText
+      observer.observe(
+        document.body,
+        {
+          childList: true,
+          subtree: true
+        }
       );
 
 
-    resSolution.textContent =
-      idea.solution;
+      /*
+        Poll briefly because script.js updates the global
+        object asynchronously after generation.
+      */
 
-    resAudience.textContent =
-      idea.audience;
+      let attempts = 0;
 
+      const blueprintWatcher = setInterval(() => {
 
-    showList(
-      resFeatures,
-      idea.features
-    );
+        attempts++;
 
+        if (window.latestBusinessBlueprint) {
 
-    showList(
-      resTech,
-      idea.technology
-    );
+          renderBlueprint(
+            window.latestBusinessBlueprint
+          );
 
+          clearInterval(blueprintWatcher);
 
-    showList(
-      resEarning,
-      idea.earning
-    );
+        }
 
+        if (attempts > 30) {
+          clearInterval(blueprintWatcher);
+        }
 
-    showList(
-      resRoadmap,
-      idea.roadmap
-    );
+      }, 300);
 
-
-    loadingPanel.classList.remove("show");
-
-    resultsPanel.classList.add("show");
-
-
-    resultsPanel.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
     });
 
-  }, 700);
+  </script>
 
-}
-
-
-form.addEventListener(
-  "submit",
-  function(event) {
-
-    event.preventDefault();
-
-    generateIdea();
-
-  }
-);
-
-
-regenerateBtn.addEventListener(
-  "click",
-  function() {
-
-    generateIdea();
-
-  }
-);
-
-
-newIdeaBtn.addEventListener(
-  "click",
-  function() {
-
-    form.reset();
-
-    resultsPanel.classList.remove("show");
-
-    loadingPanel.classList.remove("show");
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }
-);
-
-</script>
+  <script src="script.js"></script>
 
 </body>
 </html>
